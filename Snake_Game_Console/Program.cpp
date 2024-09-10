@@ -2,16 +2,21 @@
 #include <chrono>
 #include "Program.h"
 #include "Container.h"
+#include "threads.h"
+
+#define WINDOW_WIDTH 20
+#define WINDOW_HEIGHT 15
 
 int Program::run()
 {
-	Container container(50, 30);
+	Container container(WINDOW_WIDTH, WINDOW_HEIGHT);
 	bool running = true;
+
 	while (running)
 	{
+		container.initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		container.display_container();
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		std::system("cls");
+		container.MySnake.move_snake();
 	}
 	return 0;
 }
