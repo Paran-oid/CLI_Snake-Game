@@ -4,7 +4,6 @@
 #include "Snake.h"
 #include "Fruit.h"
 
-
 class Container
 {
 public:
@@ -19,10 +18,12 @@ public:
 	inline int get_height() { return Height; }
 	inline void set_width(int width) { Width = width; };
 	inline void set_height(int height) { Height = height; }
+	inline void started() { firstTime = false; }
 
 private:
 	int Width{};
 	int Height{};
 	std::vector<std::vector<char>> Array;
+	bool firstTime = true;
 };
 

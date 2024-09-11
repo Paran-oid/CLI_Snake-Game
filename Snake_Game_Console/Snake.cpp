@@ -31,3 +31,6 @@ void Snake::move_snake()
 		}
 	}
 }
+void Snake::grow_snake() {
+	//add tail depending on his size and make a for loop to display the whole snake instead of setting snake head directly in the array!
+}

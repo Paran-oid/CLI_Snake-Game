@@ -6,13 +6,9 @@ Container::Container(int width, int height) :
 	Width(width),
 	Height(height),
 	MySnake(width / 2, height / 2),
-	MyFruit(std::rand() % width, std::rand() % height)
+	MyFruit(std::rand() % (width - 2) + 1, std::rand() % (height - 2) + 1)
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
-	int fruitX = std::rand() % Width;
-	int fruitY = std::rand() % Height;
-	MyFruit = Fruit(fruitX, fruitY);
-
 	Array.resize(Height, std::vector<char>(Width));
 	initialize(width, height);
 }
@@ -24,6 +20,17 @@ void Container::initialize(int x, int y)
 
 		int fruit_x = MyFruit.get_x();
 		int fruit_y = MyFruit.get_y();
+
+		if (firstTime)
+		{
+			if (fruit_x == snake_x && fruit_y == snake_y)
+			{
+				MyFruit.set_x(fruit_x + 1);
+				MyFruit.set_y(fruit_y + 1);
+			}
+			started();
+		}
+
 
 		for (int i = 0; i < Width; i++)
 		{
@@ -44,17 +51,30 @@ void Container::initialize(int x, int y)
 			}
 		}
 
-		if ((snake_x < Width - 1 && snake_x > 0))
-			Array[snake_y][snake_x] = '0';
-		else
-			std::exit(0);
-
-		Array[fruit_x][fruit_x] = '*';
-
 		for (int i = 0; i < Width; i++)
 		{
 			Array[Height - 1][i] = '-';
 		}
+
+		Array[fruit_y][fruit_x] = '*';
+
+		if ((snake_x < Width - 1 && snake_x > 0) && ((snake_y < Height - 1 && snake_y > 0)))
+		{
+			if (snake_x == fruit_x && snake_y == fruit_y)
+			{
+				MyFruit.set_x(std::rand() % (Width - 2) + 1);
+				MyFruit.set_y(std::rand() % (Height - 2) + 1);
+				fruit_x = MyFruit.get_x();
+				fruit_y = MyFruit.get_y();
+				Array[fruit_y][fruit_x] = '*';
+
+				MySnake.increment_size();
+			}
+			Array[snake_y][snake_x] = '0';
+		}
+
+		else
+			std::exit(0);
 	}
 }
 void Container::display_container()
