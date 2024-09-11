@@ -16,21 +16,25 @@ std::pair<int, int> Snake::get_coords(int i)
 
 std::pair<int, int> Snake::move_snake()
 {
+	int old_y = get_coords(0).first;
+	int old_x = get_coords(0).second;
+
+	for (int i = Size - 1; i > 0; i--)
+	{
+		//basically each one is assigned to the one before-hand
+		body[i] = body[i - 1];
+	}
+
+	int head_y = old_y;
+	int head_x = old_x;
 
 	int c = _getch();
-	int old_y = get_coords(0).first, head_y = get_coords(0).first;
-	int old_x = get_coords(0).second, head_x = get_coords(0).second;
 	switch (c)
 	{
 	case 224:
 		c = _getch();
 		switch (c)
 		{
-			switch (Direction)
-			{
-			case Direction::up:
-
-			}
 		case 72:
 			Direction = Direction::up;
 			head_y--;
@@ -51,31 +55,6 @@ std::pair<int, int> Snake::move_snake()
 
 		body[0].first = head_y;
 		body[0].second = head_x;
-	}
-
-	if (Size > 1)
-	{
-		int l = 0;
-		for (int r = 1; r < Size; r++)
-		{
-			if (body[r].first - body[l].first > 0)
-			{
-				body[l].first++;
-			}
-			else if (body[r].first - body[l].first < 0)
-			{
-				body[r].first--;
-			}
-			else if (body[r].second - body[l].second != 0)
-			{
-				body[r].second++;
-			}
-			else
-			{
-				body[r].second--;
-			}
-			l++;
-		}
 	}
 
 	std::pair<int, int> old_values;
