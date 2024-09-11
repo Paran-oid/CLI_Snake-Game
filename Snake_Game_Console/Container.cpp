@@ -15,8 +15,8 @@ Container::Container(int width, int height) :
 void Container::initialize(int x, int y)
 {
 	{
-		int snake_x = MySnake.get_x();
-		int snake_y = MySnake.get_y();
+		int snake_x = MySnake.get_coords(0).second;
+		int snake_y = MySnake.get_coords(0).first;
 
 		int fruit_x = MyFruit.get_x();
 		int fruit_y = MyFruit.get_y();
@@ -50,7 +50,6 @@ void Container::initialize(int x, int y)
 				}
 			}
 		}
-
 		for (int i = 0; i < Width; i++)
 		{
 			Array[Height - 1][i] = '-';
@@ -60,6 +59,7 @@ void Container::initialize(int x, int y)
 
 		if ((snake_x < Width - 1 && snake_x > 0) && ((snake_y < Height - 1 && snake_y > 0)))
 		{
+			//if snake ate
 			if (snake_x == fruit_x && snake_y == fruit_y)
 			{
 				MyFruit.set_x(std::rand() % (Width - 2) + 1);
@@ -68,13 +68,22 @@ void Container::initialize(int x, int y)
 				fruit_y = MyFruit.get_y();
 				Array[fruit_y][fruit_x] = '*';
 
-				MySnake.increment_size();
+				MySnake.grow_snake(SnakeOldCords);
 			}
-			Array[snake_y][snake_x] = '0';
+			display_snake();
 		}
 
 		else
 			std::exit(0);
+	}
+}
+void Container::display_snake()
+{
+	for (int i = 0; i < MySnake.get_size(); i++)
+	{
+		int temp_x = MySnake.get_coords(i).first;
+		int temp_y = MySnake.get_coords(i).second;
+		Container::Array[temp_x][temp_y] = '0';
 	}
 }
 void Container::display_container()
@@ -88,4 +97,5 @@ void Container::display_container()
 		}
 		std::cout << std::endl;
 	}
+	SnakeOldCords = MySnake.move_snake();
 }

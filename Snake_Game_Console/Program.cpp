@@ -16,7 +16,6 @@ int Program::run()
 	{
 		container.initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		container.display_container();
-		container.MySnake.move_snake();
 	}
 	return 0;
 }
