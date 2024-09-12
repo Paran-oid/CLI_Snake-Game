@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include <random>
 #include "Container.h"
 
@@ -8,6 +9,7 @@ Container::Container(int width, int height) :
 	MySnake(width / 2, height / 2),
 	MyFruit(std::rand() % (width - 2) + 1, std::rand() % (height - 2) + 1)
 {
+	srand(static_cast<unsigned>(std::chrono::steady_clock::now().time_since_epoch().count()));
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
 	Array.resize(Height, std::vector<char>(Width));
 	initialize(width, height);
@@ -69,6 +71,7 @@ void Container::initialize(int x, int y)
 				Array[fruit_y][fruit_x] = '*';
 
 				MySnake.grow_snake(SnakeOldCords);
+				increment_score();
 			}
 			display_snake();
 		}
@@ -89,6 +92,18 @@ void Container::display_snake()
 void Container::display_container()
 {
 	std::system("cls");
+	for (int i = 0; i < Width; i++)
+	{
+		if (i == Width / 4)
+		{
+			std::cout << "score is: " << Score;
+		}
+		else
+		{
+			std::cout << ' ';
+		}
+	}
+	std::cout << std::endl;
 	for (int i = 0; i < Height; i++)
 	{
 		for (int j = 0; j < Width; j++)

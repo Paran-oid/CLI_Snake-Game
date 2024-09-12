@@ -1,8 +1,8 @@
 #pragma once
-
+#include <chrono>
 class Program
 {
 public:
-	static int run();
+	int run();
 };
 

@@ -36,25 +36,44 @@ std::pair<int, int> Snake::move_snake()
 		switch (c)
 		{
 		case 72:
-			Direction = Direction::up;
-			head_y--;
+			if (Direction != Direction::down)
+			{
+				Direction = Direction::up;
+				head_y--;
+				break;
+			}
 			break;
 		case 80:
-			Direction = Direction::down;
-			head_y++;
+			if (Direction != Direction::up)
+			{
+				Direction = Direction::down;
+				head_y++;
+			}
 			break;
 		case 75:
-			Direction = Direction::left;
-			head_x--;
+			if (Direction != Direction::right)
+			{
+				Direction = Direction::left;
+				head_x--;
+			}
 			break;
 		case 77:
-			Direction = Direction::right;
-			head_x++;
+			if (Direction != Direction::left)
+			{
+				Direction = Direction::right;
+				head_x++;
+			}
 			break;
 		}
 
 		body[0].first = head_y;
 		body[0].second = head_x;
+	}
+
+	std::pair<int, int> temp = std::make_pair(head_y, head_x);
+	if (std::find(body.begin() + 1, body.end(), temp) != body.end())
+	{
+		std::exit(0);
 	}
 
 	std::pair<int, int> old_values;

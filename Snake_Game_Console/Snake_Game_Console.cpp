@@ -3,5 +3,6 @@
 
 int main()
 {
-	return Program::run();
+	Program program;
+	return program.run();
 }

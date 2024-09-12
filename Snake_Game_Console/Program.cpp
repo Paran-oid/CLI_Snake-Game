@@ -12,6 +12,7 @@ int Program::run()
 	Container container(WINDOW_WIDTH, WINDOW_HEIGHT);
 	bool running = true;
 
+
 	while (running)
 	{
 		container.initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
